@@ -3,7 +3,7 @@ import pandas as pd
 
 def monthly_average(data, metadata_idx=3):
     """
-    Funcion used to compute monthly averages of PM2.5 concentration in Zad2.
+    Function used to compute monthly averages of PM2.5 concentration in Zad2.
     Averages over measurements in all stations for a given city in a given month (in a given year)
     Args:
         data (pandas.DataFrame): a dataframe of PM2.5 levels
