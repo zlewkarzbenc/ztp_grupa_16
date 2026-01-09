@@ -147,7 +147,7 @@ def load_data():
         return f"Wystąpił błąd przy zapisywaniu danych do pliku all_data.csv: {e}"
 
 def main():
-    print(load_data())
+    print("Load data module. This is only to be used through an import.")
 
 if __name__ == "__main__":
     main()
