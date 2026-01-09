@@ -41,7 +41,6 @@ def load_data():
             if df.empty:
                 print(f"Pobrany plik dla roku {year} jest pusty")
             else:
-                print(f"Pobrano dane dla roku {year}")
                 dataframes[year] = df
         except Exception as e:
             print(f"Błąd przy pobieraniu danych dla {year}: {e}")
@@ -142,7 +141,7 @@ def load_data():
     try:
         all_data = pd.concat([df for df in dataframes.values()], ignore_index=True)
         all_data.to_csv("all_data.csv", index=False)
-        return f"Dane zostały zapisane do jednego pliku pod nazwą all_data.csv"
+        return all_data
     except Exception as e:
         return f"Wystąpił błąd przy zapisywaniu danych do pliku all_data.csv: {e}"
 
