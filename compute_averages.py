@@ -1,5 +1,6 @@
 # liczenie średnich i wskazywanie dni z przekroczeniem normy
 import pandas as pd
+import load_data as load_data
 
 def monthly_average(data, metadata_idx=3):
     """(Zad2)
