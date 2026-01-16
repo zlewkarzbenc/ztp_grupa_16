@@ -1,11 +1,14 @@
-# plik z wczytywaniem i czyszczeniem danych
-
 import pandas as pd
 import requests
 import zipfile
 import io
 
 def load_data():
+    """
+        Returns:
+                all_data (pd.DataFrame): DataFrame, który zawiera dzienne stężenia PM2.5 w latach
+                2015, 2018, 2021 i 2024 dla wszystkich lokalizacji
+    """
     # id archiwum dla poszczególnych lat
     gios_archive_url = "https://powietrze.gios.gov.pl/pjp/archives/downloadFile/"
     gios_url_ids = {2015: '236', 2018: '603', 2021: '486', 2024: '582'}

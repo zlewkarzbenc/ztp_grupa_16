@@ -1,4 +1,3 @@
-# wizualizacje
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -77,7 +76,15 @@ def plot_city_trends(monthly_df, cities=["Warszawa", "Katowice"], years=[2015, 2
     return ax
 
 def heatmaps(monthly_df):
+    """
+        Args:
+            monthly_df (pd.DataFrame): DataFrame z śrędnią miesięczna stężenia PM2.5 dla wszystkich lokalizacji i lat.
 
+        Returns:
+            fig (plotly.graph_objects.Figure): Wykres heatmap z stężeniem PM2.5 dla wszystkich lokalizacji i lat.
+    """
+
+    # przygotowanie danych i parametrów wykresu
     locations = [c for c in monthly_df.columns if c not in ["year", "month"]]
 
     zmin = monthly_df[locations].min().min()
@@ -89,6 +96,7 @@ def heatmaps(monthly_df):
     rows = int(np.ceil(n / 2))
     cols = 2
 
+    # tworzenie subplotów
     fig = make_subplots(rows=rows, cols=cols, subplot_titles=locations)
 
     colorscale = "Viridis"
@@ -97,9 +105,8 @@ def heatmaps(monthly_df):
         row = i // 2 + 1
         col = i % 2 + 1
 
-        dfloc = monthly_df[monthly_df["year"].isin(years)]
 
-        heatmap_data = dfloc.pivot(index="year", columns="month", values=loc)
+        heatmap_data = monthly_df.pivot(index="year", columns="month", values=loc)
 
         heatmap_data = heatmap_data.reindex(index=years, columns=range(1, 13))
 
@@ -108,6 +115,7 @@ def heatmaps(monthly_df):
 
         showscale = i == 0
 
+        # tworzenie heatmapy i dodanie jej do odpowiedniego subplotu
         hm = go.Heatmap(z=heatmap_data.values, x=x, y=y,
                         colorscale=colorscale,
                         zmin=zmin, zmax=zmax,
@@ -121,6 +129,7 @@ def heatmaps(monthly_df):
 
         fig.add_trace(hm, row=row, col=col)
 
+    # aktualizacja osi dla wszystkich subplotów
     for i in range(1, rows * cols + 1):
         fig.update_yaxes(categoryorder='array', categoryarray=y,
                          row=(i - 1) // 2 + 1, col=(i - 1) % 2 + 1,
@@ -130,6 +139,7 @@ def heatmaps(monthly_df):
                          row=(i - 1) // 2 + 1, col=(i - 1) % 2 + 1,
                          title_text="Miesiąc", title_standoff=5)
 
+    # dodatkowe ustawienia ogólnego wykresu
     fig.update_layout(height=250 * rows, width=750,
                       title=dict(text='Średnie PM2.5 w latach 2015, 2018, 2021 i 2024', x=0.5, y=0.99),
                       font=dict(size=11))
