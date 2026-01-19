@@ -13,6 +13,7 @@ def monthly_df():
                         "Lublin": [3.4, 8.1, 1.2, 2]})
    return df
 
+
 @pytest.fixture(scope="session")
 def data():
     return pd.DataFrame({"Kod stacji": ["2015-01-01 12:00:00",
@@ -25,19 +26,23 @@ def data():
                          ("Warszawa", "WAR"): [25, 1, 9, 10, 16, 24],
                          ("Kraków", "KRA"): [4, 16, 10, 15, 18, 19]})
 
+
 def test_heatmap_run_without_err(monthly_df):
    fig = heatmaps(monthly_df)
    assert fig is not None
+
 
 def test_heatmap_contains_all_locations(monthly_df):
    locations = [c for c in monthly_df.columns if c not in ["year", "month"]]
    fig = heatmaps(monthly_df)
    assert len(fig.data) == len(locations)
 
+
 def test_city_trends_run_without_err(monthly_df):
    df = monthly_df.set_index(["year", "month"])
    fig = plot_city_trends(df, cities=["Warszawa", "Katowice"], years=[2015, 2018], ylim=[0, 75])
    assert fig is not None
+
 
 def test_city_trends_legend_labels(monthly_df):
     df = monthly_df.set_index(["year", "month"])
@@ -46,31 +51,35 @@ def test_city_trends_legend_labels(monthly_df):
     assert "Warszawa 2015" in labels
     assert "Katowice 2018" in labels
 
+
 def test_city_trends_num_lines(monthly_df):
     df = monthly_df.set_index(["year", "month"])
     ax = plot_city_trends(df, cities=["Warszawa", "Katowice"], years=[2015, 2018], ylim=[0, 75])
     series = {f"{city} {year}" for city in ["Warszawa", "Katowice"] for year in [2015, 2018]}
     assert len(ax.get_legend().get_texts()) == len(series)
 
+
 def test_pm25_exceedance_run_without_err(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
     fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015,threshold=15)
     assert fig is not None
 
+
 def test_pm25_exceedance_bar_count(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
-    fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015, threshold=15)
-   
+    ax = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015, threshold=15)
+
     lista = exceedance_counts[exceedance_counts["year"] == 2015]
     sort_lista = lista.sort_values("days_exceeded")
-   
+
     selected_stations = sort_lista.head(1)["station"].tolist() + sort_lista.tail(1)["station"].tolist()
     years = exceedance_counts["year"].unique()
-   
-    expected_bars = len(selected_stations) * len(years)
-    out_bars = sum(len(trace.x) for trace in fig.data)
 
-    assert expected_bars == out_bars
+    expected_bars = len(selected_stations) * len(years)
+    out_bars = len(ax.patches)
+
+    assert out_bars == expected_bars
+   
 
 def test_pm25_exceedance_station_count(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
