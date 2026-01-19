@@ -76,7 +76,7 @@ def test_pm25_exceedance_bar_count(data):
     years = exceedance_counts["year"].unique()
 
     expected_bars = len(selected_stations) * len(years)
-    out_bars = len(ax.patches)
+    out_bars = sum(len(container) for container in ax.containers)
 
     assert out_bars == expected_bars
    
