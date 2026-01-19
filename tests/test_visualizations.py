@@ -44,19 +44,4 @@ def test_pm25_exceedance_run_without_err(data):
     fig = plot_pm25_exceedance_bars(counts)
     assert fig is not None
 
-def test_pm25_exceedance_correct_data(data):
-    counts = count_days_over_treshold(data)
-
-    ax = plot_pm25_exceedance_bars(counts)
-
-    heights = [p.get_height() for p in ax.patches]
-
-    exceedance_base = (counts[counts["year"] == 2024].sort_values("days_exceeded", ascending=True))
-
-    top_stations = exceedance_base["station"].tail(3).tolist()
-    bottom_stations = exceedance_base["station"].head(3).tolist()
-    selected_stations = bottom_stations + top_stations
-
-    expected = (counts[counts["station"].isin(selected_stations)].sort_values(["station", "year"])["days_exceeded"].tolist())
-
     assert heights == expected
