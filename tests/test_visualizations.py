@@ -33,8 +33,8 @@ def test_heatmap_contains_all_locations(monthly_df):
    locations = [c for c in monthly_df.columns if c not in ["year", "month"]]
    fig = heatmaps(monthly_df)
    traces_locations = [t.name for t in fig.data]
-    for loc in locations:
-        assert loc in traces_locations
+   for loc in locations:
+      assert loc in traces_locations
 
 def test_city_trends_run_without_err(monthly_df):
    df = monthly_df.set_index(["year", "month"])
