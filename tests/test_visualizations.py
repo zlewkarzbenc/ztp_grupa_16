@@ -1,5 +1,6 @@
 from visualizations import heatmaps
 import pytest
+import pandas as pd
 
 
 @pytest.fixture(scope="session")
