@@ -34,6 +34,14 @@ def test_city_trends_run_without_err(monthly_df):
    fig = plot_city_trends(df, cities=["Warszawa", "Katowice"], years=[2015, 2018], ylim=[0, 75])
    assert fig is not None
 
+def test_city_trends_legend_labels(monthly_df):
+    df = monthly_df.set_index(["year", "month"])
+    ax = plot_city_trends(df, cities=["Warszawa", "Katowice"], years=[2015, 2018], ylim=[0, 75])
+    labels = [t.get_text() for t in ax.get_legend().get_texts()]
+    assert "Warszawa 2015" in labels
+    assert "Katowice 2018" in labels
+
+
 def test_pm25_exceedance_run_without_err(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
     fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015,threshold=15)
