@@ -11,7 +11,6 @@ def monthly_df():
                         "Katowice": [4.2, 15, 3.1, 10],
                         "Lublin": [3.4, 8.1, 1.2, 2]})
    df["year"] = df["year"].astype("int32")
-   df = df.set_index("year")
    return df
 
 def test_heatmap_run_without_err(monthly_df):
