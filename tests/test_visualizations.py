@@ -15,7 +15,7 @@ def data():
 
 def test_city_trends_run_without_err(monthly_df):
    with patch("matplotlib.pyplot.show"):
-       fig = plot_city_trends(monthly_df)
+      fig = plot_city_trends(monthly_df)
       assert fig is not None
 
 def test_heatmap_run_without_err(monthly_df):
