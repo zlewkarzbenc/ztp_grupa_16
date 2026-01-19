@@ -70,7 +70,7 @@ def test_pm25_exceedance_bar_count(data):
     expected_bars = len(selected_stations) * len(years)
     out_bars = sum(len(trace.x) for trace in fig.data)
 
-    assert expected_bars = out_bars
+    assert expected_bars == out_bars
 
 def test_pm25_exceedance_station_count(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
