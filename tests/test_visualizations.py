@@ -75,5 +75,5 @@ def test_pm25_exceedance_bar_count(data):
 def test_pm25_exceedance_station_count(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
     fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015, threshold=15)
-    stations = list(fig.data[0].x)
-    assert len(stations) == 2
+    x_labels = [t.get_text() for t in ax.get_xticklabels()]
+    assert len(x_labels) == 2
