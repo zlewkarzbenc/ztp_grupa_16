@@ -10,7 +10,6 @@ def monthly_df():
                        "Warszawa": [1.3, 20, 30, 5],
                         "Katowice": [4.2, 15, 3.1, 10],
                         "Lublin": [3.4, 8.1, 1.2, 2]})
-   #df["year"] = df["year"].astype("int32")
    return df
 
 def test_heatmap_run_without_err(monthly_df):
@@ -18,5 +17,6 @@ def test_heatmap_run_without_err(monthly_df):
    assert fig is not None
 
 def test_city_trends_run_without_err(monthly_df):
-   fig = plot_city_trends(monthly_df, cities=["Warszawa", "Katowice"], years=[2015, 2018], ylim=[0, 75])
+   df = monthly_df.set_index("year")
+   fig = plot_city_trends(df, cities=["Warszawa", "Katowice"], years=[2015, 2018], ylim=[0, 75])
    assert fig is not None
