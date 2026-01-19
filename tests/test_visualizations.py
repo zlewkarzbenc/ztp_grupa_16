@@ -2,6 +2,7 @@ from visualizations import *
 import pytest
 from compute_averages import *
 from unittest.mock import patch
+import matplotlib.pyplot as plt
 
 @pytest.fixture
 def monthly_df():
@@ -14,17 +15,20 @@ def data():
     return data
 
 def test_city_trends_run_without_err(monthly_df):
-   with patch("matplotlib.pyplot.show"):
+   with patch("matplotlib.pyplot.figure"):
       fig = plot_city_trends(monthly_df)
       assert fig is not None
+      plt.close(fig)
 
 def test_heatmap_run_without_err(monthly_df):
-   with patch("matplotlib.pyplot.show"):
+   with patch("matplotlib.pyplot.figure"):
       fig = heatmaps(monthly_df)
       assert fig is not None
+      plt.close(fig)
 
 def test_pm25_exceedance_run_without_err(data):
-   with patch("matplotlib.pyplot.show"):
+   with patch("matplotlib.pyplot.figure"):
       counts = count_days_over_treshold(data)
       fig = plot_pm25_exceedance_bars(counts)
       assert fig is not None
+      plt.close(fig)
