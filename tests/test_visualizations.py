@@ -56,3 +56,24 @@ def test_pm25_exceedance_run_without_err(data):
     exceedance_counts = count_days_over_treshold(data, treshold=15)
     fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015,threshold=15)
     assert fig is not None
+
+def test_pm25_exceedance_bar_count(data):
+    exceedance_counts = count_days_over_treshold(data, treshold=15)
+    fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015, threshold=15)
+   
+    lista = exceedance_counts[exceedance_counts["year"] == 2015]
+    sort_lista = base.sort_values("days_exceeded")
+   
+    selected_stations = sort_lista.head(1)["station"].tolist() + sort_lista.tail(1)["station"].tolist()
+    years = exceedance_counts["year"].unique()
+   
+    expected_bars = len(selected_stations) * len(years)
+    out_bars = sum(len(trace.x) for trace in fig.data)
+
+    assert expected_bars = out_bars
+
+def test_pm25_exceedance_station_count(data):
+    exceedance_counts = count_days_over_treshold(data, treshold=15)
+    fig = plot_pm25_exceedance_bars(exceedance_counts, top_n=1, base_year=2015, threshold=15)
+    stations = list(fig.data[0].x)
+    assert len(stations) == 2
