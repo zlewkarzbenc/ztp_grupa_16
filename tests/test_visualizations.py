@@ -1,8 +1,10 @@
 from visualizations import *
 import pytest
 from unittest.mock import patch
-import matplotlib.pyplot as plt
 import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import pandas as pd
 
 @pytest.fixture(scope="session")
 def monthly_df():
