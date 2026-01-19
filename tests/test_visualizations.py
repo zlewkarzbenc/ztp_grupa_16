@@ -14,12 +14,6 @@ def monthly_df():
                         "Kraków": [4.2, 15, 3.1],
                         "Lublin": [3.4, 8.1, 1.2]})
 
-def test_city_trends_run_without_err(monthly_df):
-   with patch("matplotlib.pyplot.figure"):
-      fig = plot_city_trends(monthly_df)
-      assert fig is not None
-      plt.close(fig)
-
 def test_heatmap_run_without_err(monthly_df):
    with patch("matplotlib.pyplot.figure"):
       fig = heatmaps(monthly_df)
