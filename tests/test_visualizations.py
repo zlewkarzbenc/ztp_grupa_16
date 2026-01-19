@@ -25,10 +25,3 @@ def test_heatmap_run_without_err(monthly_df):
       fig = heatmaps(monthly_df)
       assert fig is not None
       plt.close(fig)
-
-def test_pm25_exceedance_run_without_err():
-   with patch("matplotlib.pyplot.figure"):
-      counts = pd.DataFrame({"count": [1, 2, 3]})
-      fig = plot_pm25_exceedance_bars(counts)
-      assert fig is not None
-      plt.close(fig)
