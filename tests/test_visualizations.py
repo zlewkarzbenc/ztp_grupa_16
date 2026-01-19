@@ -1,4 +1,4 @@
-from visualizations import heatmaps
+from visualizations import *
 import pytest
 import pandas as pd
 
