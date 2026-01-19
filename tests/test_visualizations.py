@@ -1,10 +1,6 @@
-from visualizations import *
+from visualizations import heatmaps
 import pytest
-from unittest.mock import patch
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-import pandas as pd
+
 
 @pytest.fixture(scope="session")
 def monthly_df():
@@ -15,7 +11,5 @@ def monthly_df():
                         "Lublin": [3.4, 8.1, 1.2]})
 
 def test_heatmap_run_without_err(monthly_df):
-   with patch("matplotlib.pyplot.figure"):
-      fig = heatmaps(monthly_df)
-      assert fig is not None
-      plt.close(fig)
+   fig = heatmaps(monthly_df)
+   assert fig is not None
